@@ -5,14 +5,10 @@
     margin: 0;  
 }
 
-button{
-    cursor: pointer;
-    background:linear-gradient(60deg,black,gray);
-}
-
 :root{
     --black:black;
     --yellow:yellow;
+    --shadow_pink:rgb(242, 46, 206);
 }
 
 body{
@@ -20,8 +16,8 @@ body{
     flex-direction:column;
     align-items:center;
 }
-
-.header{
+/* --------------HEADER-------------- */
+#header{
     display:flex;
     justify-content:center;
     align-items:center;
@@ -30,111 +26,110 @@ body{
     margin-top:8px;
     font-style: italic;
     border:3px solid var(--yellow);
-    background-color:var(--black);
-    
-
-    .title{
-        font-family: "Libertinus Serif Display", system-ui;
-        text-shadow:2px 2px rgb(242, 46, 206);
-        word-spacing:25px;
-        font-size:40px;
-        color:var(--yellow);
-    }
+    background-color:var(--black);    
 }
 
-.main{
-    position:relative;
+#header > .title{
+    font-family: "Libertinus Serif Display", system-ui;
+    text-shadow:2px 2px var(--shadow_pink);
+    word-spacing:25px;
+    font-size:40px;
+    color:var(--yellow);
+}
+
+/*-------------MAIN--------- */
+#main{
     width:1000px;
     min-height:500px;
     border:3px dashed var(--black);
     border-top:none;
     border-bottom:none;
-
-    .user_data{
-        display:flex;
-        width:100%;
-        justify-content:center;
-        margin-top:8px;
-
-        .add_task{
-            padding-left:4px;
-            width: 180px;
-            height:25px;
-            border: 1px dotted var(--black);
-        }
-
-        .add_button{
-            width:120px;
-            margin-left:6px;
-            border:none;
-            border-radius:20px;
-            background-color:var(--black);
-            color:var(--yellow);
-        }
-
-        .filter_btn{
-            width:120px;
-            margin-left:6px;
-            border:none;
-            border-radius:20px;
-            background-color:var(--black);
-            color:var(--yellow);
-        }
-        
-    }
-
-    .list{
-        display:flex;
-        flex-flow:row wrap;
-        justify-content:space-between;
-        align-content:baseline;
-        margin-top:15px;
-        width:100%;
-        min-height:450px; 
-
-        .item{
-            position:relative;
-            width:450px;
-            height:50px;
-            border:1px solid var(--black);
-            margin:20px 20px 10px 20px;
-            
-
-            .check{
-                position: absolute;
-                cursor: pointer;
-                width:25px;
-                height:25px;
-                left:20px;
-                top:13px;
-            }
-
-            .text{
-                position: absolute;
-                font-family: "Libertinus Serif Display", system-ui;
-                letter-spacing:1px;
-                word-spacing:3px;
-                font-size:24px;
-                top:10px;
-                left:80px;
-            }
-
-            .remove{
-                position:absolute;
-                color:var(--yellow);
-                height:25px;
-                width:60px;
-                text-align: center;
-                border:none;
-                border-radius:20px;
-                top:12px;
-                right:5px;
-            }
-        }
-    }
 }
 
-.footer{
+/*----USER DATA---- */
+#main > .user_data{
+    display:flex;
+    width:100%;
+    justify-content:center;
+    margin-top:8px;
+}
+
+#main > .user_data > .add_task{
+    padding-left:4px;
+    width: 180px;
+    height:25px;
+    border: 1px dotted var(--black);
+    margin:0px 4px;
+}
+
+#main > .user_data > .btns{
+    width:120px;
+    border:none;
+    border-radius:20px;
+    background:linear-gradient(60deg,black,gray);
+    color:var(--yellow);
+    margin:0px 4px; 
+    cursor: pointer;
+    transition:0.5s;
+}
+
+/* ----LIST---- */
+#main > .list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    grid-template-rows:repeat(auto-fill,80px);
+    justify-items:center;
+    align-items:center;
+    margin-top:15px; 
+    width:100%;
+    min-height:450px;        
+}
+
+#main > .list > .item{
+    display:grid;
+    grid-template-columns:60px 310px 80px;
+    grid-template-rows:1fr; 
+    grid-template-areas:"check task btn";
+    justify-items:center;
+    align-items:center;
+    width:450px;
+    height:50px;
+    border:1px solid var(--black);
+}
+
+#main > .list > .item > .check{
+    cursor: pointer;
+    width:25px;
+    height:25px;
+    grid-area:check;
+}
+
+#main > .list > .item > .text{
+    font-family: "Libertinus Serif Display", system-ui;
+    letter-spacing:1px;
+    word-spacing:3px;
+    font-size:22px;
+    grid-area:task;
+    justify-self:start;
+}
+
+#main > .list > .item > .remove{
+    color:var(--yellow);
+    background:linear-gradient(60deg,black,gray);
+    height:25px;
+    width:60px;
+    cursor: pointer;
+    border:none;
+    border-radius:20px;
+    transition:0.5s;
+    grid-area:btn;
+}
+
+button:hover{
+    opacity:0.8;
+}
+
+#footer{
     display: flex;
     flex-direction: column;
     justify-content:center;
@@ -142,26 +137,11 @@ body{
     height:60px;
     border:3px solid var(--yellow);
     background-color:var(--black);
-
-    .completed{
-        letter-spacing:1px;
-        font-size:20px;
-        color:var(--yellow);
-        margin-left:90px;
-    }
 }
 
-.user_data > .add_button:hover{
-    opacity:0.9;
-    background:linear-gradient(60deg,gray,black);
-}
-
-.user_data > .filter_btn:hover{
-    opacity:0.9;
-    background:linear-gradient(60deg,gray,black);
-}
-
-.item > .remove:hover{
-    opacity:0.9;
-    background:linear-gradient(60deg,gray,black);
+#footer > .completed{
+    letter-spacing:1px;
+    font-size:20px;
+    color:var(--yellow);
+    margin-left:90px;
 }

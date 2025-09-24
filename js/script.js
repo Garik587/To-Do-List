@@ -1,7 +1,6 @@
-const add_button = document.querySelector(".add_button");
+const btns = document.querySelectorAll(".btns");
 const add_task = document.querySelector(".add_task");
 const list = document.querySelector(".list");
-const fil_button = document.querySelector(".filter_btn");
 const text_compl = document.querySelector(".completed");
 
 let tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -52,14 +51,23 @@ function render(){
 }
 
 render();
-add_button.addEventListener("click", () =>{
-    if(add_task.value !== ""){
-        addTask({name:add_task.value,checked:false});
-        render();
-        add_task.value = "";
-        compl();
-    }
-})
+btns.forEach((btn)=>{
+    btn.addEventListener("click", (e) =>{
+        if(e.target.textContent === "Add task" && add_task.value !== ""){
+            addTask({name:add_task.value,checked:false});
+            render();
+            add_task.value = "";
+            compl();
+        }else if(e.target.textContent === "Filter"){
+            tasks = tasks.filter((obj)=>{
+                return !(obj.checked);
+            });
+            saveTasks();
+            render();
+            compl();
+        }   
+    })
+});
 
 list.addEventListener("click", (e)=>{
     if(e.target.className === "check"){
@@ -75,13 +83,3 @@ list.addEventListener("click", (e)=>{
         compl();
     }
 })
-
-fil_button.addEventListener("click",()=>{
-    tasks = tasks.filter((obj)=>{
-        return !(obj.checked);
-    });
-    saveTasks();
-    render();
-    compl();
-})
-
