@@ -11,7 +11,7 @@ function compl(){
     });
     text_compl.textContent = `${compl_tasks.length}/${tasks.length} completed`;
 }
-compl();
+
 function appHtmlChild(parent,child){
     parent.appendChild(child);
 }
@@ -27,6 +27,7 @@ function saveTasks(){
 
 function render(){
     list.innerHTML = "";
+    compl();
     tasks.forEach((value,index) => {
         const div = document.createElement("div");
         div.className = "item";
@@ -42,19 +43,29 @@ function render(){
         remove_btn.className = "remove";
         remove_btn.dataset.index = index;
         remove_btn.textContent = "remove";
+        const date_text = document.createElement("span");
+        date_text.textContent = "craetion date:" + value.date;
+        date_text.className = "date_text";
 
         appHtmlChild(div,check);
         appHtmlChild(div,title);
         appHtmlChild(div,remove_btn);
+        appHtmlChild(div,date_text);
         appHtmlChild(list,div);
     });
 }
 
+function nowDate(){
+    const date = new Date();
+    return date.toLocaleDateString() + "-" + date.toLocaleTimeString();
+}
+
 render();
+
 btns.forEach((btn)=>{
     btn.addEventListener("click", (e) =>{
         if(e.target.textContent === "Add task" && add_task.value !== ""){
-            addTask({name:add_task.value,checked:false});
+            addTask({name:add_task.value,checked:false,date:nowDate()});
             render();
             add_task.value = "";
             compl();
