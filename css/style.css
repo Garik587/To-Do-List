@@ -1,4 +1,12 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Libertinus+Serif+Display&display=swap'); */
+@font-face {
+    font-family:"Liber-Italic";
+    src: url("../fonts/LibertinusSans-Italic.ttf");
+}
+
+@font-face {
+    font-family:"Liber-Regular";
+    src: url("../fonts/LibertinusSans-Regular.ttf");
+}
 
 *{
     padding: 0;
@@ -24,13 +32,12 @@ body{
     width:1000px;
     height:80px;
     margin-top:8px;
-    font-style: italic;
     border:3px solid var(--yellow);
     background-color:var(--black);    
 }
 
 #header > .title{
-    font-family: "Libertinus Serif Display", system-ui;
+    font-family: "Liber-Italic",sans-serif;
     text-shadow:2px 2px var(--shadow_pink);
     word-spacing:25px;
     font-size:40px;
@@ -108,7 +115,7 @@ body{
 }
 
 #main > .list > .item > .text{
-    font-family: "Libertinus Serif Display", system-ui;
+    font-family: "Liber-Regular", sans-serif;
     letter-spacing:1px;
     word-spacing:3px;
     font-size:22px;
