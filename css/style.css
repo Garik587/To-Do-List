@@ -10,29 +10,51 @@
 
 *{
     padding: 0;
-    margin: 0;  
+    margin: 0; 
+    box-sizing: border-box; 
+}
+
+/* -----VARIEBLS----- */
+
+@property --angle{
+    syntax:"<angle>";
+    initial-value:0deg;
+    inherits:false;
 }
 
 :root{
-    --black:black;
-    --yellow:yellow;
-    --shadow_pink:rgb(242, 46, 206);
+    --black:#131515;
+    --backColor:#262525;
+    --yellow:#f8f839;
+    --shadow_pink:#f22ece;
+}
+
+/* ------ANIMATIONS------ */
+
+@keyframes buttonAnime{
+    to{
+        --angle:360deg;;
+    }from{
+        --angle:0deg;
+    }
 }
 
 body{
     display:flex;
     flex-direction:column;
     align-items:center;
+    background-color:var(--backColor);
+    padding:10px;
 }
+
 /* --------------HEADER-------------- */
 #header{
     display:flex;
     justify-content:center;
     align-items:center;
-    width:1000px;
+    width:900px;
     height:80px;
-    margin-top:8px;
-    border:3px solid var(--yellow);
+    border:1px solid var(--yellow);
     background-color:var(--black);    
 }
 
@@ -46,38 +68,73 @@ body{
 
 /*-------------MAIN--------- */
 #main{
-    width:1000px;
+    width:900px;
     min-height:500px;
-    border:3px dashed var(--black);
+    border:1px dashed var(--yellow);
     border-top:none;
     border-bottom:none;
+    padding:10px;
+    background-color: var(--black);
+    z-index:1;
+}
+
+button{
+    position: relative;
+    width:120px;
+    border:none;
+    border-radius:20px;
+    background: var(--backColor);
+    color:var(--yellow); 
+    cursor: pointer;
+}
+
+button::after,
+button::before{
+    content:"";
+    position: absolute;
+    background:conic-gradient(from var(--angle),transparent 20%,var(--yellow));
+    width:100%;
+    height:100%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border-radius:20px;
+    z-index:-1;
+    padding:2px;
+    opacity: 0;
+}
+
+button::before{
+    filter: blur(2px);
+}
+
+button:hover::after,
+button:hover::before{
+    opacity: 1;
+    animation:buttonAnime 2.5s infinite ease-in; 
 }
 
 /*----USER DATA---- */
 #main > .user_data{
     display:flex;
-    width:100%;
     justify-content:center;
-    margin-top:8px;
+    width:100%;
+    gap:14px;
 }
 
 #main > .user_data > .add_task{
+    all:unset;
     padding-left:4px;
     width: 180px;
     height:25px;
-    border: 1px dotted var(--black);
-    margin:0px 4px;
+    border: 1px solid var(--yellow);
+    color:var(--shadow_pink)
 }
 
-#main > .user_data > .btns{
-    width:120px;
-    border:none;
-    border-radius:20px;
-    background:linear-gradient(60deg,black,gray);
-    color:var(--yellow);
-    margin:0px 4px; 
-    cursor: pointer;
-    transition:0.5s;
+#main > .user_data > .add_task::placeholder{
+    color:var(--shadow_pink);
+    font-family:"Liber-Regular",sans-serif;
+    opacity:0.9;
 }
 
 /* ----LIST---- */
@@ -95,62 +152,54 @@ body{
 
 #main > .list > .item{
     display:grid;
-    grid-template-columns:60px 310px 80px;
+    grid-template-columns:30px 310px 80px;
     grid-template-rows:50px 20px; 
     grid-template-areas:
         "check task btn"
         ". date .";
     justify-items:center;
     align-items:center;
-    width:450px;
+    width:420px;
     height:70px;
-    border:1px solid var(--black);
+    border:1px solid var(--yellow);
 }
 
 #main > .list > .item > .check{
     cursor: pointer;
-    width:25px;
-    height:25px;
+    width:20px;
+    height:20px;
     grid-area:check;
 }
 
 #main > .list > .item > .text{
     font-family: "Liber-Regular", sans-serif;
-    letter-spacing:1px;
-    word-spacing:3px;
+    color:var(--yellow);
     font-size:22px;
     grid-area:task;
     justify-self:start;
 }
 
 #main > .list > .item > .remove{
-    color:var(--yellow);
-    background:linear-gradient(60deg,black,gray);
     height:25px;
     width:60px;
-    cursor: pointer;
-    border:none;
-    border-radius:20px;
-    transition:0.5s;
     grid-area:btn;
 }
 
 #main > .list > .item > .date_text{
     width:250px;
     height:20px;
+    color:var(--yellow);
     grid-area:date;
 }
-button:hover{
-    opacity:0.8;
-}
 
+/*-------------FOOTER--------- */
 #footer{
     display: flex;
     flex-direction: column;
     justify-content:center;
-    width:1000px;
+    width:900px;
     height:60px;
-    border:3px solid var(--yellow);
+    border:1px solid var(--yellow);
     background-color:var(--black);
 }
 
