@@ -32,10 +32,10 @@
 /* ------ANIMATIONS------ */
 
 @keyframes buttonAnime{
-    to{
-        --angle:360deg;;
-    }from{
-        --angle:0deg;
+    from{
+        --angle:0deg;;
+    }to{
+        --angle:360deg;
     }
 }
 

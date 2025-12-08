@@ -16,9 +16,60 @@ function appHtmlChild(parent,child){
     parent.appendChild(child);
 }
 
+function generetId(len){
+    const data = "abcdefgijklmnopqrstuvwxyz";
+
+    let id = "";
+    for(i = 0; i < len;i++){
+        id += data[Math.floor(Math.random() * data.length)];
+    }
+
+    return id;
+}
+
+function createTaskElement(data,index){
+    const div = document.createElement("div");
+    div.className = "item";
+    div.id = data.ID;
+    const check = document.createElement("input");
+    check.type = "checkbox";
+    check.className = "check";
+    check.checked = data.checked;
+    check.dataset.index = index;
+    const title = document.createElement("h2");
+    title.className = "text";
+    title.textContent = data.name;
+    const remove_btn = document.createElement("button");
+    remove_btn.className = "remove";
+    remove_btn.textContent = "remove";
+    const date_text = document.createElement("span");
+    date_text.textContent = "craetion date:" + data.date;
+    date_text.className = "date_text";
+
+    appHtmlChild(div,check);
+    appHtmlChild(div,title);
+    appHtmlChild(div,remove_btn);
+    appHtmlChild(div,date_text);
+    appHtmlChild(list,div);
+}
+
 function addTask(task){
     tasks.push(task);
+    createTaskElement(task,tasks.length - 1);
+    compl();
     saveTasks();
+}
+
+function removeTask(e){
+    const item = document.getElementById(e.id);
+    console.log(item);
+    tasks = tasks.filter((task)=>{
+        return !(task.ID === item.id);
+    });
+    compl();
+    saveTasks();
+    list.removeChild(item);
+       
 }
 
 function saveTasks(){
@@ -28,30 +79,8 @@ function saveTasks(){
 function render(){
     list.innerHTML = "";
     compl();
-    tasks.forEach((value,index) => {
-        const div = document.createElement("div");
-        div.className = "item";
-        const check = document.createElement("input");
-        check.type = "checkbox";
-        check.className = "check";
-        check.checked = value.checked;
-        check.dataset.index = index;
-        const title = document.createElement("h2");
-        title.className = "text";
-        title.textContent = value.name;
-        const remove_btn = document.createElement("button");
-        remove_btn.className = "remove";
-        remove_btn.dataset.index = index;
-        remove_btn.textContent = "remove";
-        const date_text = document.createElement("span");
-        date_text.textContent = "craetion date:" + value.date;
-        date_text.className = "date_text";
-
-        appHtmlChild(div,check);
-        appHtmlChild(div,title);
-        appHtmlChild(div,remove_btn);
-        appHtmlChild(div,date_text);
-        appHtmlChild(list,div);
+    tasks.forEach((task,index) => {
+        createTaskElement(task,index);
     });
 }
 
@@ -65,17 +94,14 @@ render();
 btns.forEach((btn)=>{
     btn.addEventListener("click", (e) =>{
         if(e.target.textContent === "Add task" && add_task.value !== ""){
-            addTask({name:add_task.value,checked:false,date:nowDate()});
-            render();
+            addTask({name:add_task.value,checked:false,date:nowDate(),ID:generetId(5)});
             add_task.value = "";
-            compl();
         }else if(e.target.textContent === "Filter"){
             tasks = tasks.filter((obj)=>{
                 return !(obj.checked);
             });
             saveTasks();
             render();
-            compl();
         }   
     })
 });
@@ -84,13 +110,9 @@ list.addEventListener("click", (e)=>{
     if(e.target.className === "check"){
         const index = e.target.dataset.index;
         tasks[index].checked = !tasks[index].checked;
-        saveTasks();  
-        compl();  
-    } else if(e.target.className === "remove"){
-        const index = e.target.dataset.index;
-        tasks.splice(index,1);
-        saveTasks();
-        render();
         compl();
+        saveTasks();  
+    } else if(e.target.className === "remove"){
+        removeTask(e.target.closest(".item"));
     }
 })
